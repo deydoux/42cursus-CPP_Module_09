@@ -1,4 +1,4 @@
-NAME = ex00
+NAME = btc
 
 SOURCES = \
 BitcoinExchange.cpp \
