@@ -2,6 +2,7 @@
 #define BITCOINEXCHANGE_HPP
 
 #include <cstdlib>
+#include <fstream>
 #include <iostream>
 #include <map>
 #include <string>
@@ -22,6 +23,9 @@ public:
 	static float	parseFloat(const std::string &str, const std::string &name);
 	static float	parseExchangeRate(const std::string &str);
 	static float	parseValue(const std::string &str);
+
+	static void						parseDataHeader(std::ifstream &file, bool &invert, std::string &delimiter);
+	static std::map<time_t, float>	parseData();
 };
 
 #endif
