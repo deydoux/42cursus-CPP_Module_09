@@ -11,7 +11,9 @@
 
 class BitcoinExchange {
 private:
-	std::map<time_t, float>	_data;
+	typedef std::map<time_t, float>	data_t;
+
+	data_t	_data;
 public:
 	BitcoinExchange();
 	// BitcoinExchange(const std::string &inputFilename);
@@ -25,8 +27,8 @@ public:
 	static float	parseExchangeRate(const std::string &str);
 	static float	parseValue(const std::string &str);
 
-	static void						parseDataHeader(std::ifstream &file, bool &invert, std::string &delimiter);
-	static std::map<time_t, float>	parseData();
+	static void		parseDataHeader(std::ifstream &file, bool &invert, std::string &delimiter);
+	static data_t	parseData();
 };
 
 #endif

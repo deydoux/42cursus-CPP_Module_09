@@ -67,7 +67,7 @@ void BitcoinExchange::parseDataHeader(std::ifstream &file, bool &invert, std::st
 	}
 }
 
-std::map<time_t, float> BitcoinExchange::parseData() {
+BitcoinExchange::data_t BitcoinExchange::parseData() {
 	std::ifstream file("data.csv");
 	if (file.fail())
 		throw (std::ios_base::failure("Failed to open file: data.csv"));
@@ -76,7 +76,7 @@ std::map<time_t, float> BitcoinExchange::parseData() {
 	std::string delimiter;
 	parseDataHeader(file, invert, delimiter);
 
-	std::map<time_t, float> data;
+	data_t data;
 
 	size_t lineNum = 1;
 	while (!file.eof()) {
