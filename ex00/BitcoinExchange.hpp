@@ -13,9 +13,12 @@ class BitcoinExchange {
 private:
 	typedef std::map<time_t, float>	data_t;
 
-	data_t	_data;
+	data_t			_data;
+	std::ifstream	_inputFile;
+	std::string		_inputFilename;
 
-	void	handleInput(std::ifstream &file);
+	void	parseInputHeader(bool &invert, std::string &delimiter);
+	void	handleInput(const char *filename);
 
 	static time_t	parseDate(const std::string &str);
 	static float	parseFloat(const std::string &str, const std::string &name);

@@ -1,6 +1,70 @@
 #include "BitcoinExchange.hpp"
 
-void BitcoinExchange::handleInput(std::ifstream &file) {
+void BitcoinExchange::parseInputHeader(bool &invert, std::string &delimiter) {
+	std::string line;
+	std::getline(_inputFile, line);
+	if (_inputFile.fail())
+		throw (std::ios_base::failure("Failed to read file: " + _inputFilename));
+
+	size_t datePos = line.find("date");
+	size_t valuePos = line.find("value");
+	if ((datePos && valuePos) || datePos == std::string::npos || valuePos == std::string::npos)
+		throw (std::invalid_argument("Invalid header: " + _inputFilename));
+
+	if (datePos == 0) {
+		invert = false;
+		delimiter = line.substr(4, valuePos - 4);
+	} else {
+		invert = true;
+		delimiter = line.substr(5, datePos - 5);
+	}
+}
+
+void BitcoinExchange::handleInput(const char *filename) {
+	if (!filename)
+		throw (std::invalid_argument("No input file specified"));
+
+	_inputFilename = std::string(filename);
+	_inputFile.open(filename);
+	if (_inputFile.fail())
+		throw (std::ios_base::failure("Failed to open file: " + _inputFilename));
+
+	bool invert;
+	std::string delimiter;
+	parseInputHeader(invert, delimiter);
+
+	size_t lineNum = 1;
+	while (!_inputFile.eof()) {
+		std::string line;
+		std::getline(_inputFile, line);
+		if (_inputFile.bad())
+			throw (std::ios_base::failure("Failed to read file: " + _inputFilename));
+
+		lineNum++;
+		if (line.empty())
+			continue ;
+
+		try {
+			size_t pos = line.find(delimiter);
+			if (pos == std::string::npos) {
+				std::ostringstream oss;
+				oss << "Invalid input: " << _inputFilename << ":" << lineNum << ": " << line;
+				throw (std::invalid_argument(oss.str()));
+			}
+
+			std::string dateStr = line.substr(0, pos);
+			std::string valueStr = line.substr(pos + delimiter.size());
+			if (invert)
+				std::swap(dateStr, valueStr);
+
+			time_t date = parseDate(dateStr);
+			float value = parseValue(valueStr);
+
+			std::cout << date << " " << value << std::endl;
+		} catch (std::exception &e) {
+			std::cerr << "Input error: " << e.what() << std::endl;
+		}
+	}
 }
 
 time_t BitcoinExchange::parseDate(const std::string &str) {
@@ -50,7 +114,7 @@ void BitcoinExchange::parseDataHeader(std::ifstream &file, bool &invert, std::st
 	if ((datePos && exchangeRatePos) || datePos == std::string::npos || exchangeRatePos == std::string::npos)
 		throw (std::invalid_argument("Invalid header: data.csv"));
 
-	if (!datePos) {
+	if (datePos == 0) {
 		invert = false;
 		delimiter = line.substr(4, exchangeRatePos - 4);
 	} else {
@@ -74,9 +138,12 @@ BitcoinExchange::data_t BitcoinExchange::parseData() {
 	while (!file.eof()) {
 		std::string line;
 		std::getline(file, line);
+		if (file.bad())
+			throw (std::ios_base::failure("Failed to read file: data.csv"));
+
 		lineNum++;
-		if (file.fail() || line.empty())
-			break ;
+		if (line.empty())
+			continue ;
 
 		try {
 			size_t pos = line.find(delimiter);
@@ -98,7 +165,7 @@ BitcoinExchange::data_t BitcoinExchange::parseData() {
 				throw (std::invalid_argument("Duplicate date: " + dateStr));
 			data[date] = exchangeRate;
 		} catch (std::exception &e) {
-			std::cerr << "Data parsing error: " << e.what() << std::endl;
+			std::cerr << "Data error: " << e.what() << std::endl;
 		}
 	}
 	return (data);
@@ -107,18 +174,11 @@ BitcoinExchange::data_t BitcoinExchange::parseData() {
 BitcoinExchange::BitcoinExchange(): _data(parseData()) {}
 
 BitcoinExchange::BitcoinExchange(const char *inputFilename): _data(parseData()) {
-	if (!inputFilename) {
-		std::cerr << "Error: No input file specified" << std::endl;
-		return ;
+	try {
+		handleInput(inputFilename);
+	} catch (std::exception &e) {
+		std::cerr << "Input error: " << e.what() << std::endl;
 	}
-
-	std::ifstream file(inputFilename);
-	if (file.fail()) {
-		std::cerr << "Error: Failed to open file: " << inputFilename << std::endl;
-		return ;
-	}
-
-	handleInput(file);
 }
 
 BitcoinExchange::BitcoinExchange(const BitcoinExchange &other): _data(other._data) {}
