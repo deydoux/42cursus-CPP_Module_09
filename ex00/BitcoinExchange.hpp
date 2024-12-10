@@ -15,11 +15,12 @@ private:
 
 	data_t	_data;
 
+	void	handleInput(std::ifstream &file);
+
 	static time_t	parseDate(const std::string &str);
 	static float	parseFloat(const std::string &str, const std::string &name);
 	static float	parseExchangeRate(const std::string &str);
 	static float	parseValue(const std::string &str);
-
 	static void		parseDataHeader(std::ifstream &file, bool &invert, std::string &delimiter);
 	static data_t	parseData();
 public:

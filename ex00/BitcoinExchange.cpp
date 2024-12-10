@@ -1,5 +1,8 @@
 #include "BitcoinExchange.hpp"
 
+void BitcoinExchange::handleInput(std::ifstream &file) {
+}
+
 time_t BitcoinExchange::parseDate(const std::string &str) {
 	struct tm tm = {};
 
@@ -104,7 +107,18 @@ BitcoinExchange::data_t BitcoinExchange::parseData() {
 BitcoinExchange::BitcoinExchange(): _data(parseData()) {}
 
 BitcoinExchange::BitcoinExchange(const char *inputFilename): _data(parseData()) {
-	(void)inputFilename;
+	if (!inputFilename) {
+		std::cerr << "Error: No input file specified" << std::endl;
+		return ;
+	}
+
+	std::ifstream file(inputFilename);
+	if (file.fail()) {
+		std::cerr << "Error: Failed to open file: " << inputFilename << std::endl;
+		return ;
+	}
+
+	handleInput(file);
 }
 
 BitcoinExchange::BitcoinExchange(const BitcoinExchange &other): _data(other._data) {}
