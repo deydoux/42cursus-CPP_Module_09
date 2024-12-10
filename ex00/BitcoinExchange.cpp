@@ -1,16 +1,5 @@
 #include "BitcoinExchange.hpp"
 
-BitcoinExchange::BitcoinExchange(): _data(parseData()) {}
-
-BitcoinExchange::BitcoinExchange(const BitcoinExchange &other): _data(other._data) {}
-
-BitcoinExchange::~BitcoinExchange() {}
-
-BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &rhs) {
-	_data = rhs._data;
-	return (*this);
-}
-
 time_t BitcoinExchange::parseDate(const std::string &str) {
 	struct tm tm = {};
 
@@ -109,4 +98,15 @@ BitcoinExchange::data_t BitcoinExchange::parseData() {
 		}
 	}
 	return (data);
+}
+
+BitcoinExchange::BitcoinExchange(): _data(parseData()) {}
+
+BitcoinExchange::BitcoinExchange(const BitcoinExchange &other): _data(other._data) {}
+
+BitcoinExchange::~BitcoinExchange() {}
+
+BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &rhs) {
+	_data = rhs._data;
+	return (*this);
 }
