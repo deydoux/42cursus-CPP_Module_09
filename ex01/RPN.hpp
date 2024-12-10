@@ -8,10 +8,14 @@
 
 class RPN {
 private:
-	std::stack<int>	_stack;
-	std::string		_input;
+	typedef std::stack<int>	stack_t;
 
-	void 	calculate();
+	stack_t		_stack;
+	std::string	_input;
+
+	void	calculate();
+
+	static void reverseStack(stack_t &stack);
 public:
 	RPN();
 	RPN(const char *input);
