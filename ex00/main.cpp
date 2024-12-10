@@ -1,7 +1,5 @@
 #include "BitcoinExchange.hpp"
 
 int main(int argc, char **argv) {
-	BitcoinExchange();
-	(void)argc;
-	(void)argv;
+	BitcoinExchange(argc > 1 ? argv[1] : NULL);
 }

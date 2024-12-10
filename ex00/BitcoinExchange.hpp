@@ -24,7 +24,7 @@ private:
 	static data_t	parseData();
 public:
 	BitcoinExchange();
-	// BitcoinExchange(const std::string &inputFilename);
+	BitcoinExchange(const char *inputFilename);
 	BitcoinExchange(const BitcoinExchange &other);
 	~BitcoinExchange();
 

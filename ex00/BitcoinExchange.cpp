@@ -102,6 +102,10 @@ BitcoinExchange::data_t BitcoinExchange::parseData() {
 
 BitcoinExchange::BitcoinExchange(): _data(parseData()) {}
 
+BitcoinExchange::BitcoinExchange(const char *inputFilename): _data(parseData()) {
+	(void)inputFilename;
+}
+
 BitcoinExchange::BitcoinExchange(const BitcoinExchange &other): _data(other._data) {}
 
 BitcoinExchange::~BitcoinExchange() {}
