@@ -14,8 +14,6 @@ private:
 	std::string	_input;
 
 	void	calculate();
-
-	static void reverseStack(stack_t &stack);
 public:
 	RPN();
 	RPN(const char *input);

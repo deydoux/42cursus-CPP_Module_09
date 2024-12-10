@@ -3,16 +3,6 @@
 void RPN::calculate() {
 }
 
-void RPN::reverseStack(stack_t &stack) {
-	stack_t tmp;
-
-	while (!stack.empty()) {
-		tmp.push(stack.top());
-		stack.pop();
-	}
-	stack = tmp;
-}
-
 RPN::RPN() : _stack(), _input() {}
 
 RPN::RPN(const char *input): _stack() {
