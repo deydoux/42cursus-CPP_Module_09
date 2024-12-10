@@ -12,15 +12,16 @@ BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &rhs) {
 }
 
 time_t BitcoinExchange::parseDate(const std::string &str) {
-	struct tm tm;
+	struct tm tm = {};
 
 	char *end = strptime(str.c_str(), "%Y-%m-%d", &tm);
 	if (!end || *end)
-		throw (std::invalid_argument("Can't parse \"" + str + "\" date"));
+		throw (std::invalid_argument("Can't parse date: " + str));
 
-	time_t time = mktime(&tm);
-	if (time == -1)
-		throw (std::invalid_argument("Invalid \"" + str + "\" date"));
+	struct tm safeTm = tm;
+	time_t time = mktime(&safeTm);
+	if (time == -1 || safeTm.tm_mday != tm.tm_mday || safeTm.tm_mon != tm.tm_mon || safeTm.tm_year != tm.tm_year)
+		throw (std::invalid_argument("Invalid date: " + str));
 
 	return (time);
 }
@@ -76,5 +77,36 @@ std::map<time_t, float> BitcoinExchange::parseData() {
 	parseDataHeader(file, invert, delimiter);
 
 	std::map<time_t, float> data;
+
+	size_t lineNum = 1;
+	while (!file.eof()) {
+		std::string line;
+		std::getline(file, line);
+		lineNum++;
+		if (file.fail() || line.empty())
+			break ;
+
+		try {
+			size_t pos = line.find(delimiter);
+			if (pos == std::string::npos) {
+				std::ostringstream oss;
+				oss << "Invalid data: data.csv:" << lineNum << ": " << line;
+				throw (std::invalid_argument(oss.str()));
+			}
+
+			std::string dateStr = line.substr(0, pos);
+			std::string exchangeRateStr = line.substr(pos + delimiter.size());
+
+			if (invert)
+				std::swap(dateStr, exchangeRateStr);
+
+			time_t date = parseDate(dateStr);
+			float exchangeRate = parseExchangeRate(exchangeRateStr);
+
+			data[date] = exchangeRate;
+		} catch (std::exception &e) {
+			std::cerr << "Data parsing error: " << e.what() << std::endl;
+		}
+	}
 	return (data);
 }
