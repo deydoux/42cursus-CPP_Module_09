@@ -85,13 +85,14 @@ BitcoinExchange::data_t BitcoinExchange::parseData() {
 
 			std::string dateStr = line.substr(0, pos);
 			std::string exchangeRateStr = line.substr(pos + delimiter.size());
-
 			if (invert)
 				std::swap(dateStr, exchangeRateStr);
 
 			time_t date = parseDate(dateStr);
 			float exchangeRate = parseExchangeRate(exchangeRateStr);
 
+			if (data.find(date) != data.end())
+				throw (std::invalid_argument("Duplicate date: " + dateStr));
 			data[date] = exchangeRate;
 		} catch (std::exception &e) {
 			std::cerr << "Data parsing error: " << e.what() << std::endl;
