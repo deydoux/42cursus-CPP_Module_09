@@ -19,6 +19,7 @@ private:
 
 	void	parseInputHeader(bool &invert, std::string &delimiter);
 	void	handleInput(const char *filename);
+	void 	processInput(time_t date, const std::string &dateStr, float value);
 
 	static time_t	parseDate(const std::string &str);
 	static float	parseFloat(const std::string &str, const std::string &name);

@@ -59,12 +59,23 @@ void BitcoinExchange::handleInput(const char *filename) {
 
 			time_t date = parseDate(dateStr);
 			float value = parseValue(valueStr);
-
-			std::cout << date << " " << value << std::endl;
+			processInput(date, dateStr, value);
 		} catch (std::exception &e) {
 			std::cerr << "Input error: " << e.what() << std::endl;
 		}
 	}
+}
+
+void BitcoinExchange::processInput(time_t date, const std::string &dateStr, float value) {
+	data_t::iterator it = _data.lower_bound(date);
+	if (it == _data.end()) {
+		std::cerr << "No exchange rate data for date: " << date << std::endl;
+		return ;
+	}
+
+	float exchangeRate = it->second;
+	float bitcoin = value * exchangeRate;
+	std::cout << value << "USD on " << dateStr << " is " << bitcoin << "BTC" << std::endl;
 }
 
 time_t BitcoinExchange::parseDate(const std::string &str) {
