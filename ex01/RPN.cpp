@@ -33,29 +33,25 @@ void RPN::operate(const char &op) {
 
 	int b = _operands.top();
 	_operands.pop();
-	int a = _operands.top();
-	_operands.pop();
 
 	switch (op) {
 	case '+':
-		_operands.push(a + b);
+		_operands.top() += b;
 		break ;
 	case '-':
-		_operands.push(a - b);
+		_operands.top() -= b;
 		break ;
 	case '*':
-		_operands.push(a * b);
+		_operands.top() *= b;
 		break ;
 	case '/':
 		if (b == 0)
 			throw (std::logic_error("Division by zero"));
-		_operands.push(a / b);
+		_operands.top() /= b;
 		break ;
 	default:
 		throw (std::logic_error("Invalid operator"));
 	}
-
-	// std::cout << a << " " << op << " " << b << " = " << _operands.top() << std::endl;
 }
 
 bool RPN::isOperand(const std::string &str) {
