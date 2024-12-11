@@ -1,24 +1,24 @@
 #include "RPN.hpp"
 
-void RPN::calculate(std::string input) {
-	while (!input.empty()) {
-		size_t size = operandSize(input);
+void RPN::calculate(std::string expression) {
+	while (!expression.empty()) {
+		size_t size = operandSize(expression);
 
 		if (size) {
-			std::istringstream iss(input.substr(0, size));
+			std::istringstream iss(expression.substr(0, size));
 			int n;
 			iss >> n;
 			_operands.push(n);
-		} else if (isOperator(input[0])) {
-			operate(input[0]);
+		} else if (isOperator(expression[0])) {
+			operate(expression[0]);
 			size = 1;
 		} else
-			size = spaceSize(input);
+			size = spaceSize(expression);
 
 		if (size == 0)
 			throw (std::logic_error("Invalid character"));
 
-		input.erase(0, size);
+		expression.erase(0, size);
 	}
 
 	if (_operands.size() != 1)
@@ -81,14 +81,14 @@ size_t RPN::spaceSize(const std::string &str) {
 
 RPN::RPN(): _operands() {}
 
-RPN::RPN(const char *input): _operands() {
-	if (!input) {
-		std::cerr << "Error: No input provided" << std::endl;
+RPN::RPN(const char *expression): _operands() {
+	if (!expression) {
+		std::cerr << "Error: No expression provided" << std::endl;
 		return ;
 	}
 
 	try {
-		calculate(input);
+		calculate(expression);
 	} catch (std::exception &e) {
 		std::cerr << "Error: " << e.what() << std::endl;
 	}

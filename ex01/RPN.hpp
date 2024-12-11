@@ -13,7 +13,7 @@ private:
 
 	stack_t	_operands;
 
-	void	calculate(std::string input);
+	void	calculate(std::string expression);
 	void	operate(const char &op);
 
 	static bool		isOperand(const std::string &str);
