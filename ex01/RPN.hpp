@@ -26,7 +26,7 @@ public:
 	RPN(const RPN &other);
 	~RPN();
 
-	RPN &operator=(const RPN &rhs);
+	RPN	&operator=(const RPN &rhs);
 };
 
 #endif
