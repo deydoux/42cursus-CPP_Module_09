@@ -26,6 +26,8 @@ public:
 	void		sortPairs(C<pair_t> &pairs, size_t size);
 	template <template <typename T, typename Alloc = std::allocator<T> > class C>
 	C<int>		sortLower(const C<pair_t> &pairs, size_t size);
+	template <template <typename T, typename Alloc = std::allocator<T> > class C>
+	void		insertLarger(C<int> &sorted, const C<pair_t> &pairs, size_t size);
 };
 
 #include "PmergeMe.tpp"

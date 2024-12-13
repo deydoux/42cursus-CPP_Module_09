@@ -12,9 +12,10 @@ C<int> PmergeMe::algorithm(C<int> container) {
 	C<pair_t> pairs = initPairs(container, size);
 	sortPairs(pairs, size / 2);
 
-	C<int> lower = sortLower(pairs, size / 2 + size % 2);
+	C<int> sorted = sortLower(pairs, size / 2 + size % 2);
+	insertLarger(sorted, pairs, size / 2);
 
-	return (C<int>());
+	return (sorted);
 }
 
 template <template <typename T, typename Alloc = std::allocator<T> > class C>
@@ -45,6 +46,14 @@ C<int> PmergeMe::sortLower(const C<pair_t> &pairs, size_t size) {
 		lower.push_back(pairs[i].first);
 
 	return (algorithm(lower));
+}
+
+template <template <typename T, typename Alloc = std::allocator<T> > class C>
+void PmergeMe::insertLarger(C<int> &sorted, const C<pair_t> &pairs, size_t size) {
+	for (size_t i = 0; i < size; i++) {
+		typename C<int>::iterator it = std::lower_bound(sorted.begin(), sorted.end(), pairs[i].second);
+		sorted.insert(it, pairs[i].second);
+	}
 }
 
 #endif
