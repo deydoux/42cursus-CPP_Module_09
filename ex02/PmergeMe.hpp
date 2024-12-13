@@ -21,11 +21,11 @@ public:
 	template <template <typename T, typename Alloc = std::allocator<T> > class C>
 	C<int>		algorithm(C<int> container);
 	template <template <typename T, typename Alloc = std::allocator<T> > class C>
-	C<pair_t>	initPairs(C<int> container, size_t size);
+	C<pair_t>	initPairs(const C<int> &container, size_t size);
 	template <template <typename T, typename Alloc = std::allocator<T> > class C>
-	void		sortPairs(C<pair_t> pairs, size_t size);
+	void		sortPairs(C<pair_t> &pairs, size_t size);
 	template <template <typename T, typename Alloc = std::allocator<T> > class C>
-	C<int>		sortLower(C<pair_t> pairs, size_t size);
+	C<int>		sortLower(const C<pair_t> &pairs, size_t size);
 };
 
 #include "PmergeMe.tpp"

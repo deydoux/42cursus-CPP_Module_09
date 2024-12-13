@@ -18,7 +18,7 @@ C<int> PmergeMe::algorithm(C<int> container) {
 }
 
 template <template <typename T, typename Alloc = std::allocator<T> > class C>
-C<PmergeMe::pair_t> PmergeMe::initPairs(C<int> container, size_t size) {
+C<PmergeMe::pair_t> PmergeMe::initPairs(const C<int> &container, size_t size) {
 	C<pair_t> pairs;
 
 	for (size_t i = 1; i < size; i += 2)
@@ -31,14 +31,14 @@ C<PmergeMe::pair_t> PmergeMe::initPairs(C<int> container, size_t size) {
 }
 
 template <template <typename T, typename Alloc = std::allocator<T> > class C>
-void PmergeMe::sortPairs(C<pair_t> pairs, size_t size) {
+void PmergeMe::sortPairs(C<pair_t> &pairs, size_t size) {
 	for (size_t i = 0; i < size; i++)
 		if (pairs[i].first > pairs[i].second)
 			std::swap(pairs[i].first, pairs[i].second);
 }
 
 template <template <typename T, typename Alloc = std::allocator<T> > class C>
-C<int> PmergeMe::sortLower(C<pair_t> pairs, size_t size) {
+C<int> PmergeMe::sortLower(const C<pair_t> &pairs, size_t size) {
 	C<int> lower;
 
 	for (size_t i = 0; i < size; i++)
