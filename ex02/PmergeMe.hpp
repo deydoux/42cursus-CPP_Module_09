@@ -19,11 +19,13 @@ public:
 	PmergeMe	&operator=(const PmergeMe &rhs);
 
 	template <template <typename T, typename Alloc = std::allocator<T> > class C>
-	void		algorithm(C<int> container);
+	C<int>		algorithm(C<int> container);
 	template <template <typename T, typename Alloc = std::allocator<T> > class C>
 	C<pair_t>	initPairs(C<int> container, size_t size);
 	template <template <typename T, typename Alloc = std::allocator<T> > class C>
-	void	sortPairs(C<pair_t> pairs, size_t size);
+	void		sortPairs(C<pair_t> pairs, size_t size);
+	template <template <typename T, typename Alloc = std::allocator<T> > class C>
+	C<int>		sortLower(C<pair_t> pairs, size_t size);
 };
 
 #include "PmergeMe.tpp"
