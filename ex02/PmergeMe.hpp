@@ -8,16 +8,20 @@
 #include <vector>
 
 class PmergeMe {
+private:
+	typedef std::pair<int, int>	pair_t;
 public:
 	PmergeMe();
 	PmergeMe(const char *input);
 	PmergeMe(const PmergeMe &other);
 	~PmergeMe();
 
-	PmergeMe &operator=(const PmergeMe &rhs);
+	PmergeMe	&operator=(const PmergeMe &rhs);
 
-	template <typename T>
-	void	fjAlgorithm(T container);
+	template <template <typename T, typename Alloc = std::allocator<T> > class C>
+	void		algorithm(C<int> container);
+	template <template <typename T, typename Alloc = std::allocator<T> > class C>
+	C<pair_t>	initPairs(C<int> container);
 };
 
 #include "PmergeMe.tpp"

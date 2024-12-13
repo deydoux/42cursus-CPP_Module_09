@@ -31,12 +31,12 @@ PmergeMe::PmergeMe(const char *input) {
 
 	std::pair<clock_t, clock_t> deqInterval;
 	deqInterval.first = clock();
-	fjAlgorithm(std::deque<int>(src.begin(), src.end()));
+	algorithm(std::deque<int>(src.begin(), src.end()));
 	deqInterval.second = clock();
 
 	std::pair<clock_t, clock_t> vecInterval;
 	vecInterval.first = clock();
-	fjAlgorithm(std::vector<int>(src.begin(), src.end()));
+	algorithm(std::vector<int>(src.begin(), src.end()));
 	vecInterval.second = clock();
 
 	std::cout << "After: ";
