@@ -21,7 +21,7 @@ public:
 	template <template <typename T, typename Alloc = std::allocator<T> > class C>
 	void		algorithm(C<int> container);
 	template <template <typename T, typename Alloc = std::allocator<T> > class C>
-	C<pair_t>	initPairs(C<int> container);
+	C<pair_t>	initPairs(C<int> container, size_t size);
 };
 
 #include "PmergeMe.tpp"
