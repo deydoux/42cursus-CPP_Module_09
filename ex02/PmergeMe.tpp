@@ -50,9 +50,24 @@ C<int> PmergeMe::sortLower(const C<pair_t> &pairs, size_t size) {
 
 template <template <typename T, typename Alloc = std::allocator<T> > class C>
 void PmergeMe::insertLarger(C<int> &sorted, const C<pair_t> &pairs, size_t size) {
+	C<bool> inserted(size, false);
+
 	for (size_t i = 0; i < size; i++) {
-		typename C<int>::iterator it = std::lower_bound(sorted.begin(), sorted.end(), pairs[i].second);
-		sorted.insert(it, pairs[i].second);
+		size_t j = jacobsthal(i + 1) - 1;
+		if (j >= size)
+			j = size - 1;
+		if (!inserted[j]) {
+			typename C<int>::iterator it = std::lower_bound(sorted.begin(), sorted.end(), pairs[j].second);
+			sorted.insert(it, pairs[j].second);
+			inserted[j] = true;
+		}
+	}
+
+	for (size_t k = 0; k < size; k++) {
+		if (!inserted[k]) {
+			typename C<int>::iterator it = std::lower_bound(sorted.begin(), sorted.end(), pairs[k].second);
+			sorted.insert(it, pairs[k].second);
+		}
 	}
 }
 
