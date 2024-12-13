@@ -1,5 +1,9 @@
 #include "PmergeMe.hpp"
 
+size_t PmergeMe::jacobsthal(size_t n) {
+	return ((std::pow(2, n) - std::pow(-1, n)) / 3);
+}
+
 PmergeMe::PmergeMe() {}
 
 PmergeMe::PmergeMe(const char *input) {

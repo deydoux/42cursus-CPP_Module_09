@@ -2,6 +2,7 @@
 #define PMERGEME_HPP
 
 #include <algorithm>
+#include <cmath>
 #include <deque>
 #include <iostream>
 #include <sstream>
@@ -10,6 +11,8 @@
 class PmergeMe {
 private:
 	typedef std::pair<int, int>	pair_t;
+
+	static size_t	jacobsthal(size_t n);
 public:
 	PmergeMe();
 	PmergeMe(const char *input);
