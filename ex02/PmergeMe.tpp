@@ -4,9 +4,8 @@
 #include "PmergeMe.hpp"
 
 template <typename C>
-C PmergeMe::algorithm(C container, size_t depth) {
+C PmergeMe::algorithm(C container, size_t pairSize) {
 	size_t size = container.size();
-	size_t pairSize = std::pow(2, depth);
 	size_t pairs = size / pairSize;
 
 	if (pairs < 2)
@@ -14,7 +13,7 @@ C PmergeMe::algorithm(C container, size_t depth) {
 
 	sortPairs(container, size, pairSize);
 
-	C main = algorithm(container, depth + 1);
+	C main = algorithm(container, pairSize * 2);
 
 	return (container);
 }
