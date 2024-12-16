@@ -5,7 +5,7 @@ main.cpp \
 PmergeMe.cpp \
 
 CXX = c++
-CXXFLAGS = -MD -std=c++98 -Wall -Wextra -Werror
+CXXFLAGS = -MD -std=c++98 -Wall -Wextra -Werror -g
 RM = rm -rf
 MKDIR = mkdir -p
 

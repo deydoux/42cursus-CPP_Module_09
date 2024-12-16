@@ -11,6 +11,11 @@
 class PmergeMe {
 private:
 	static size_t	jacobsthal(size_t n);
+
+	template <typename C>
+	C		algorithm(C container, size_t depth = 0);
+	template <typename C>
+	void	sortPairs(C &container, size_t size, size_t pairSize);
 public:
 	PmergeMe();
 	PmergeMe(char **input, size_t size);
@@ -18,9 +23,6 @@ public:
 	~PmergeMe();
 
 	PmergeMe	&operator=(const PmergeMe &rhs);
-
-	template <typename C>
-	C	algorithm(C container);
 };
 
 #include "PmergeMe.tpp"
