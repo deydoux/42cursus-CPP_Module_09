@@ -31,15 +31,15 @@ PmergeMe::PmergeMe(char **input, size_t size) {
 		std::cout << " " << *it;
 	std::cout << std::endl;
 
-	std::pair<clock_t, clock_t> deqInterval;
-	deqInterval.first = clock();
+	// std::pair<clock_t, clock_t> deqInterval;
+	// deqInterval.first = clock();
 	std::deque<int> deqSorted = algorithm(std::deque<int>(src.begin(), src.end()));
-	deqInterval.second = clock();
+	// deqInterval.second = clock();
 
-	std::pair<clock_t, clock_t> vecInterval;
-	vecInterval.first = clock();
-	std::vector<int> vecSorted = algorithm(std::vector<int>(src.begin(), src.end()));
-	vecInterval.second = clock();
+	// std::pair<clock_t, clock_t> vecInterval;
+	// vecInterval.first = clock();
+	// std::vector<int> vecSorted = algorithm(std::vector<int>(src.begin(), src.end()));
+	// vecInterval.second = clock();
 
 	std::cout << "After: ";
 	for (std::deque<int>::iterator it = deqSorted.begin(); it != deqSorted.end(); it++)
