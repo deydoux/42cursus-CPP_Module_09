@@ -24,6 +24,9 @@ $(BUILD_DIR)/%.o: %.cpp
 $(NAME): $(OBJECTS)
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
+debug:
+	$(MAKE) CXXFLAGS="$(CXXFLAGS) -g -DDEBUG"
+
 clean:
 	$(RM) $(BUILD_DIR)
 
