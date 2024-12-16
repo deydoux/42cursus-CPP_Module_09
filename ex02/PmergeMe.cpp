@@ -6,25 +6,23 @@ size_t PmergeMe::jacobsthal(size_t n) {
 
 PmergeMe::PmergeMe() {}
 
-PmergeMe::PmergeMe(const char *input) {
+PmergeMe::PmergeMe(char **input, size_t size) {
+	if (size < 2) {
+		std::cerr << "Error: invalid input" << std::endl;
+		return ;
+	}
+
 	std::deque<int> src;
-
-	std::istringstream iss(input);
-	std::string token;
-	while (std::getline(iss, token, ' ')) {
-		if (token.empty())
-			continue ;
-
-		for (size_t i = 0; token[i]; i++) {
-			if (!std::isdigit(token[i])) {
-				std::cerr << "Error: invalid input" << std::endl;
-				return ;
-			}
-		}
-
-		std::istringstream iss(token);
+	for (size_t i = 0; i < size; i++) {
+		std::istringstream iss(input[i]);
 		int n;
 		iss >> n;
+
+		if (iss.fail() || !iss.eof()) {
+			std::cerr << "Error: invalid input" << std::endl;
+			return ;
+		}
+
 		src.push_back(n);
 	}
 

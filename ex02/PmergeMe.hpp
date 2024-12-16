@@ -15,7 +15,7 @@ private:
 	static size_t	jacobsthal(size_t n);
 public:
 	PmergeMe();
-	PmergeMe(const char *input);
+	PmergeMe(char **input, size_t size);
 	PmergeMe(const PmergeMe &other);
 	~PmergeMe();
 
