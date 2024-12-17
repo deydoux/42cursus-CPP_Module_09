@@ -12,13 +12,13 @@ PmergeMe::PmergeMe(char **input, size_t size) {
 		return ;
 	}
 
-	std::deque<int> src;
+	std::deque<long long> src;
 	for (size_t i = 0; i < size; i++) {
 		std::istringstream iss(input[i]);
-		int n;
+		long long n;
 		iss >> n;
 
-		if (iss.fail() || !iss.eof()) {
+		if (n < 0 || iss.fail() || !iss.eof()) {
 			std::cerr << "Error: invalid input" << std::endl;
 			return ;
 		}
@@ -27,22 +27,22 @@ PmergeMe::PmergeMe(char **input, size_t size) {
 	}
 
 	std::cout << "Before:";
-	for (std::deque<int>::iterator it = src.begin(); it != src.end(); it++)
+	for (std::deque<long long>::iterator it = src.begin(); it != src.end(); it++)
 		std::cout << " " << *it;
 	std::cout << std::endl;
 
 	// std::pair<clock_t, clock_t> deqInterval;
 	// deqInterval.first = clock();
-	std::deque<int> deqSorted = algorithm(std::deque<int>(src.begin(), src.end()));
+	std::deque<long long> deqSorted = algorithm(std::deque<long long>(src.begin(), src.end()));
 	// deqInterval.second = clock();
 
 	// std::pair<clock_t, clock_t> vecInterval;
 	// vecInterval.first = clock();
-	// std::vector<int> vecSorted = algorithm(std::vector<int>(src.begin(), src.end()));
+	// std::vector<long long> vecSorted = algorithm(std::vector<long long>(src.begin(), src.end()));
 	// vecInterval.second = clock();
 
 	std::cout << "After: ";
-	for (std::deque<int>::iterator it = deqSorted.begin(); it != deqSorted.end(); it++)
+	for (std::deque<long long>::iterator it = deqSorted.begin(); it != deqSorted.end(); it++)
 		std::cout << " " << *it;
 	std::cout << std::endl;
 }
