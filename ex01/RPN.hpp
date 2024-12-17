@@ -9,7 +9,7 @@
 
 class RPN {
 private:
-	typedef std::stack<int>	stack_t;
+	typedef std::stack<double>	stack_t;
 
 	stack_t	_operands;
 

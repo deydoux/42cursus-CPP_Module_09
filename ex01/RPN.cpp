@@ -6,7 +6,7 @@ void RPN::calculate(std::string expression) {
 
 		if (size) {
 			std::istringstream iss(expression.substr(0, size));
-			int n;
+			double n;
 			iss >> n;
 			_operands.push(n);
 		} else if (isOperator(expression[0])) {
@@ -31,12 +31,12 @@ void RPN::operate(const char &op) {
 	if (_operands.size() < 2)
 		throw (std::logic_error("Not enough operands"));
 
-	int b = _operands.top();
+	double b = _operands.top();
 	_operands.pop();
-	int a = _operands.top();
+	double a = _operands.top();
 	_operands.pop();
 
-	int result;
+	double result;
 	switch (op) {
 	case '+':
 		result = a + b;
@@ -75,8 +75,12 @@ bool RPN::isOperator(const char &c) {
 
 size_t RPN::operandSize(const std::string &str) {
 	size_t size = 0;
-	while (std::isdigit(str[size]) || (size == 0 && str[0] == '-'))
-		size++;
+	bool dot = false;
+
+	while (std::isdigit(str[size]) || (size == 0 && str[0] == '-') || (str[size] == '.' && !dot))
+		if (str[size++] == '.')
+			dot = true;
+
 	return (size == 1 && str[0] == '-' ? 0 : size);
 }
 
