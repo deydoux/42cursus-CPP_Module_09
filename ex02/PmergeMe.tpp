@@ -14,8 +14,8 @@ void PmergeMe::algorithm(C &container, size_t pairSize) {
 	sortPairs(container, pairSize);
 	algorithm(container, pairSize * 2);
 
-	// C pend = popPend(container, pairSize);
-
+	C pend = pop(container, container.size() - (pairSize * 2));
+	container.insert(container.end(), pend.begin(), pend.end());
 	container.insert(container.end(), odd.begin(), odd.end());
 }
 
