@@ -6,7 +6,7 @@
 template <typename C>
 void PmergeMe::algorithm(C &container, size_t pairSize) {
 	C odd = pop(container, container.size() % (pairSize * 2));
-	if (!container.size()) {
+	if (container.empty()) {
 		container = odd;
 		return ;
 	}
@@ -15,6 +15,10 @@ void PmergeMe::algorithm(C &container, size_t pairSize) {
 	algorithm(container, pairSize * 2);
 
 	C lower = popLower(container, pairSize);
+	if (lower.empty()) {
+		container.insert(container.end(), odd.begin(), odd.end());
+		return ;
+	}
 
 	// std::cout << "Pair size: " << pairSize << std::endl;
 	// std::cout << "Container:";
@@ -31,8 +35,8 @@ void PmergeMe::algorithm(C &container, size_t pairSize) {
 	// std::cout << std::endl;
 	// std::cout << std::endl;
 
-	// container.insert(container.end(), pend.begin(), pend.end());
-	container.insert(container.end(), odd.begin(), odd.end());
+	// container.insert(container.end(), lower.begin(), lower.end());
+	// container.insert(container.end(), odd.begin(), odd.end());
 }
 
 template <typename C>
