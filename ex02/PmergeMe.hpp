@@ -11,6 +11,7 @@
 class PmergeMe {
 private:
 	static size_t	jacobsthal(size_t n);
+	static size_t	mersenne(size_t n);
 
 	template <typename C>
 	void	algorithm(C &container, size_t pairSize = 1);
