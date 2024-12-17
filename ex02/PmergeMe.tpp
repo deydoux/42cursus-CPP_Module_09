@@ -5,10 +5,10 @@
 
 template <typename C>
 C PmergeMe::algorithm(C container, size_t pairSize) {
-	if (container.size() / pairSize < 2)
-		return (container);
-
 	C odd = popOdd(container, pairSize * 2);
+	if (!container.size())
+		return (odd);
+
 	sortPairs(container, pairSize);
 
 	C main = algorithm(container, pairSize * 2);
