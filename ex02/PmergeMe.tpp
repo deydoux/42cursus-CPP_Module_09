@@ -59,7 +59,7 @@ C PmergeMe::popLower(C &container, size_t pairSize) {
 	C lower;
 
 	for (size_t i = 0; !rhs.empty(); i++) {
-		C &dst = (i % 2) ? lower : container;
+		C &dst = (i % 2) ? container : lower;
 		dst.insert(dst.end(), rhs.begin(), rhs.begin() + pairSize);
 		rhs.erase(rhs.begin(), rhs.begin() + pairSize);
 	}
