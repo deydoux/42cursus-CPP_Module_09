@@ -18,6 +18,8 @@ private:
 	C		pop(C &container, size_t size);
 	template <typename C>
 	void	sortPairs(C &container, size_t pairSize);
+	template <typename C>
+	C		popLower(C &container, size_t pairsSize);
 public:
 	PmergeMe();
 	PmergeMe(char **input, size_t size);
