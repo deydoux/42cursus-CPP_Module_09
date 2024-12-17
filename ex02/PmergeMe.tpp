@@ -5,22 +5,33 @@
 
 template <typename C>
 C PmergeMe::algorithm(C container, size_t pairSize) {
-	size_t size = container.size();
-	if (size / pairSize < 2)
+	if (container.size() / pairSize < 2)
 		return (container);
 
-	sortPairs(container, size, pairSize);
+	C odd = popOdd(container, pairSize * 2);
+	sortPairs(container, pairSize);
 
 	C main = algorithm(container, pairSize * 2);
-
+	main.insert(main.end(), odd.begin(), odd.end());
 	return (main);
 }
 
 template <typename C>
-void PmergeMe::sortPairs(C &container, size_t size, size_t pairSize) {
-	size -= size % (pairSize * 2);
+C PmergeMe::popOdd(C &container, size_t pairsSize) {
+	C odd;
 
-	for (size_t i = 0; i < size; i += pairSize * 2)
+	size_t oddSize = container.size() % pairsSize;
+	if (oddSize) {
+		odd.insert(odd.begin(), container.end() - oddSize, container.end());
+		container.erase(container.end() - oddSize, container.end());
+	}
+
+	return (odd);
+}
+
+template <typename C>
+void PmergeMe::sortPairs(C &container, size_t pairSize) {
+	for (size_t i = 0; i < container.size(); i += pairSize * 2)
 		if (container[i + pairSize - 1] > container[i + pairSize * 2 - 1])
 			for (size_t j = 0; j < pairSize; j++)
 				std::swap(container[i + j], container[i + j + pairSize]);

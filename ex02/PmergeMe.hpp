@@ -15,7 +15,9 @@ private:
 	template <typename C>
 	C		algorithm(C container, size_t pairSize = 1);
 	template <typename C>
-	void	sortPairs(C &container, size_t size, size_t pairSize);
+	C		popOdd(C &container, size_t pairsSize);
+	template <typename C>
+	void	sortPairs(C &container, size_t pairSize);
 public:
 	PmergeMe();
 	PmergeMe(char **input, size_t size);
