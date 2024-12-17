@@ -4,16 +4,17 @@
 #include "PmergeMe.hpp"
 
 template <typename C>
-C PmergeMe::algorithm(C container, size_t pairSize) {
+void PmergeMe::algorithm(C &container, size_t pairSize) {
 	C odd = popOdd(container, pairSize * 2);
-	if (!container.size())
-		return (odd);
+	if (!container.size()) {
+		container = odd;
+		return ;
+	}
 
 	sortPairs(container, pairSize);
 
-	C main = algorithm(container, pairSize * 2);
-	main.insert(main.end(), odd.begin(), odd.end());
-	return (main);
+	algorithm(container, pairSize * 2);
+	container.insert(container.end(), odd.begin(), odd.end());
 }
 
 template <typename C>

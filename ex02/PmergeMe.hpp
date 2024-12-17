@@ -13,7 +13,7 @@ private:
 	static size_t	jacobsthal(size_t n);
 
 	template <typename C>
-	C		algorithm(C container, size_t pairSize = 1);
+	void	algorithm(C &container, size_t pairSize = 1);
 	template <typename C>
 	C		popOdd(C &container, size_t pairsSize);
 	template <typename C>
