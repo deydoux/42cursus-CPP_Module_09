@@ -5,29 +5,28 @@
 
 template <typename C>
 void PmergeMe::algorithm(C &container, size_t pairSize) {
-	C odd = popOdd(container, pairSize * 2);
+	C odd = pop(container, container.size() % (pairSize * 2));
 	if (!container.size()) {
 		container = odd;
 		return ;
 	}
 
 	sortPairs(container, pairSize);
-
 	algorithm(container, pairSize * 2);
+
+	// C pend = popPend(container, pairSize);
+
 	container.insert(container.end(), odd.begin(), odd.end());
 }
 
 template <typename C>
-C PmergeMe::popOdd(C &container, size_t pairsSize) {
-	C odd;
+C PmergeMe::pop(C &container, size_t size) {
+	C popped;
 
-	size_t oddSize = container.size() % pairsSize;
-	if (oddSize) {
-		odd.insert(odd.begin(), container.end() - oddSize, container.end());
-		container.erase(container.end() - oddSize, container.end());
-	}
+	popped.insert(popped.begin(), container.end() - size, container.end());
+	container.erase(container.end() - size, container.end());
 
-	return (odd);
+	return (popped);
 }
 
 template <typename C>

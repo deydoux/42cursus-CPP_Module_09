@@ -15,7 +15,7 @@ private:
 	template <typename C>
 	void	algorithm(C &container, size_t pairSize = 1);
 	template <typename C>
-	C		popOdd(C &container, size_t pairsSize);
+	C		pop(C &container, size_t size);
 	template <typename C>
 	void	sortPairs(C &container, size_t pairSize);
 public:
