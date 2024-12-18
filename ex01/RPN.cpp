@@ -81,7 +81,7 @@ size_t RPN::operandSize(const std::string &str) {
 		if (str[size++] == '.')
 			dot = true;
 
-	return (size == 1 && str[0] == '-' ? 0 : size);
+	return ((size == 1 && (str[0] == '-' || str[0] == '.')) ? 0 : size);
 }
 
 size_t RPN::spaceSize(const std::string &str) {
