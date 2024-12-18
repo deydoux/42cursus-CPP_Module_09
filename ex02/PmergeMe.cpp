@@ -22,8 +22,18 @@ PmergeMe::PmergeMe(char **input, size_t size) {
 		long long n;
 		iss >> n;
 
-		if (n < 0 || iss.fail() || !iss.eof()) {
+		if (iss.fail() || !iss.eof()) {
 			std::cerr << "Error: invalid input" << std::endl;
+			return ;
+		}
+
+		if (n < 0) {
+			std::cerr << "Error: negative number" << std::endl;
+			return ;
+		}
+
+		if (std::find(src.begin(), src.end(), n) != src.end()) {
+			std::cerr << "Error: duplicate number" << std::endl;
 			return ;
 		}
 
@@ -54,6 +64,10 @@ PmergeMe::PmergeMe(char **input, size_t size) {
 	double vecTime = static_cast<double>(vecEnd - vecStart) / CLOCKS_PER_SEC * 1000000;
 	std::cout << "Time to process a range of " << src.size() << " elements with std::deque  : " << deqTime << " us" << std::endl;
 	std::cout << "Time to process a range of " << src.size() << " elements with std::vector : " << vecTime << " us" << std::endl;
+
+	for (std::vector<long long>::iterator it = vec.begin() + 1; it != vec.end(); it++)
+		if (*(it - 1) > *it)
+			std::cerr << "Error: invalid output" << std::endl;
 }
 
 PmergeMe::PmergeMe(const PmergeMe &) {}
