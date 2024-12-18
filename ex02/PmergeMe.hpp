@@ -21,6 +21,10 @@ private:
 	void	sortPairs(C &container, size_t pairSize);
 	template <typename C>
 	C		popLower(C &container, size_t pairsSize);
+	template <typename C>
+	void	insertLower(C &container, C &lower, size_t pairSize);
+	template <typename C>
+	void	binaryInsert(C &container, size_t range, typename C::iterator pair, size_t pairSize);
 public:
 	PmergeMe();
 	PmergeMe(char **input, size_t size);
