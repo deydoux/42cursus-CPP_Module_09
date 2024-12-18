@@ -13,32 +13,9 @@ void PmergeMe::algorithm(C &container, size_t pairSize) {
 
 	sortPairs(container, pairSize);
 	algorithm(container, pairSize * 2);
-
 	C lower = popLower(container, pairSize);
 	lower.insert(lower.end(), odd.begin(), odd.end());
-	// if (lower.empty()) {
-	// 	container.insert(container.end(), odd.begin(), odd.end());
-	// 	return ;
-	// }
-
-	// std::cout << "Pair size: " << pairSize << std::endl;
-	// std::cout << "Container:";
-	// for (typename C::iterator it = container.begin(); it != container.end(); it++)
-	// 	std::cout << " " << *it;
-	// std::cout << std::endl;
-	// std::cout << "Lower:";
-	// for (typename C::iterator it = lower.begin(); it != lower.end(); it++)
-	// 	std::cout << " " << *it;
-	// std::cout << std::endl;
-	// std::cout << "Odd:";
-	// for (typename C::iterator it = odd.begin(); it != odd.end(); it++)
-	// 	std::cout << " " << *it;
-	// std::cout << std::endl;
-	// std::cout << std::endl;
-
 	insertLower(container, lower, pairSize);
-
-	// container.insert(container.end(), odd.begin(), odd.end());
 }
 
 template <typename C>
@@ -78,14 +55,15 @@ void PmergeMe::insertLower(C &container, C &lower, size_t pairSize) {
 	size_t inserted = 1;
 
 	for (size_t n = 2; lower.size() >= pairSize; n++) {
-		size_t range = mersenne(n);
+		size_t range = mersenne(n) * pairSize;
 		size_t maxInsert = jacobsthal(n);
 
 		size_t inserting = maxInsert - inserted + 1;
 		while (inserting--) {
-			typename C::iterator pair = lower.begin() + inserting * pairSize;
-			if (pair >= lower.end())
+			if (inserting * pairSize >= lower.size())
 				continue ;
+
+			typename C::iterator pair = lower.begin() + inserting * pairSize;
 
 			binaryInsert(container, range, pair, pairSize);
 			lower.erase(pair, pair + pairSize);
@@ -93,18 +71,15 @@ void PmergeMe::insertLower(C &container, C &lower, size_t pairSize) {
 
 		inserted = maxInsert;
 	}
-
-	container.insert(container.end(), lower.begin(), lower.end());
 }
 
 template <typename C>
 void PmergeMe::binaryInsert(C &container, size_t range, typename C::iterator pair, size_t pairSize) {
-	typename C::iterator lhs = container.begin();
+	if (range > container.size())
+		range = container.size();
 
-	typename C::iterator rhs = container.begin() + range;
-	if (rhs > container.end())
-		rhs = container.end();
-	rhs -= pairSize;
+	typename C::iterator lhs = container.begin();
+	typename C::iterator rhs = container.begin() + range - pairSize;
 
 	while (lhs < rhs) {
 		typename C::iterator mid = lhs + ((rhs - lhs) / (2 * pairSize)) * pairSize;
