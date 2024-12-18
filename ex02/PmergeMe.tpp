@@ -13,6 +13,7 @@ void PmergeMe::algorithm(C &container, size_t pairSize) {
 
 	sortPairs(container, pairSize);
 	algorithm(container, pairSize * 2);
+
 	C lower = popLower(container, pairSize);
 	lower.insert(lower.end(), odd.begin(), odd.end());
 	insertLower(container, lower, pairSize);
@@ -38,9 +39,9 @@ void PmergeMe::sortPairs(C &container, size_t pairSize) {
 
 template <typename C>
 C PmergeMe::popLower(C &container, size_t pairSize) {
-	C rhs = pop(container, container.size() - pairSize * 2);
 	C lower;
 
+	C rhs = pop(container, container.size() - pairSize * 2);
 	for (size_t i = 0; !rhs.empty(); i++) {
 		C &dst = (i % 2) ? container : lower;
 		dst.insert(dst.end(), rhs.begin(), rhs.begin() + pairSize);
