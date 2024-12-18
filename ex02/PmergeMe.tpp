@@ -54,7 +54,7 @@ template <typename C>
 void PmergeMe::insertLower(C &container, C &lower, size_t pairSize) {
 	size_t inserted = 1;
 
-	for (size_t n = 2; lower.size() >= pairSize; n++) {
+	for (size_t n = 2; !lower.empty(); n++) {
 		size_t range = mersenne(n) * pairSize;
 		size_t maxInsert = jacobsthal(n);
 
@@ -79,7 +79,7 @@ void PmergeMe::binaryInsert(C &container, size_t range, typename C::iterator pai
 		range = container.size();
 
 	typename C::iterator lhs = container.begin();
-	typename C::iterator rhs = container.begin() + range - pairSize;
+	typename C::iterator rhs = container.begin() + range;
 
 	while (lhs < rhs) {
 		typename C::iterator mid = lhs + ((rhs - lhs) / (2 * pairSize)) * pairSize;
