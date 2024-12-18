@@ -27,11 +27,6 @@ PmergeMe::PmergeMe(char **input, size_t size) {
 			return ;
 		}
 
-		if (n < 0) {
-			std::cerr << "Error: negative number" << std::endl;
-			return ;
-		}
-
 		if (std::find(src.begin(), src.end(), n) != src.end()) {
 			std::cerr << "Error: duplicate number" << std::endl;
 			return ;
