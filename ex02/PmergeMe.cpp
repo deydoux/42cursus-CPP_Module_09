@@ -1,7 +1,7 @@
 #include "PmergeMe.hpp"
 
 size_t PmergeMe::jacobsthal(size_t n) {
-	return ((std::pow(2, n) - std::pow(-1, n)) / 3);
+	return ((std::pow(2, n + 1) - std::pow(-1, n)) / 3);
 }
 
 size_t PmergeMe::mersenne(size_t n) {

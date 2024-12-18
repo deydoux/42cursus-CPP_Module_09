@@ -15,10 +15,11 @@ void PmergeMe::algorithm(C &container, size_t pairSize) {
 	algorithm(container, pairSize * 2);
 
 	C lower = popLower(container, pairSize);
-	if (lower.empty()) {
-		container.insert(container.end(), odd.begin(), odd.end());
-		return ;
-	}
+	lower.insert(lower.end(), odd.begin(), odd.end());
+	// if (lower.empty()) {
+	// 	container.insert(container.end(), odd.begin(), odd.end());
+	// 	return ;
+	// }
 
 	// std::cout << "Pair size: " << pairSize << std::endl;
 	// std::cout << "Container:";
@@ -37,7 +38,6 @@ void PmergeMe::algorithm(C &container, size_t pairSize) {
 
 	insertLower(container, lower, pairSize);
 
-	// container.insert(container.end(), lower.begin(), lower.end());
 	// container.insert(container.end(), odd.begin(), odd.end());
 }
 
@@ -76,11 +76,25 @@ C PmergeMe::popLower(C &container, size_t pairSize) {
 template <typename C>
 void PmergeMe::insertLower(C &container, C &lower, size_t pairSize) {
 	size_t inserted = 1;
-	size_t i = 1;
 
-	while (!lower.empty()) {
+	for (size_t n = 2; lower.size() >= pairSize; n++) {
+		size_t range = mersenne(n);
+		size_t maxInsert = jacobsthal(n);
 
+		size_t inserting = maxInsert - inserted + 1;
+		while (inserting--) {
+			typename C::iterator pair = lower.begin() + inserting * pairSize;
+			if (pair >= lower.end())
+				continue ;
+
+			binaryInsert(container, range, pair, pairSize);
+			lower.erase(pair, pair + pairSize);
+		}
+
+		inserted = maxInsert;
 	}
+
+	container.insert(container.end(), lower.begin(), lower.end());
 }
 
 template <typename C>
