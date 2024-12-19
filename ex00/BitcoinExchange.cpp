@@ -67,11 +67,12 @@ void BitcoinExchange::handleInput(const char *filename) {
 }
 
 void BitcoinExchange::processInput(time_t date, const std::string &dateStr, float value) {
-	data_t::iterator it = _data.lower_bound(date * -1);
-	if (it == _data.end()) {
+	data_t::iterator it = _data.upper_bound(date);
+	if (it == _data.begin()) {
 		std::cerr << "No exchange rate data for date: " << date << std::endl;
 		return ;
 	}
+	it--;
 
 	float exchangeRate = it->second;
 	float bitcoin = value * exchangeRate;
@@ -174,7 +175,7 @@ BitcoinExchange::data_t BitcoinExchange::parseData() {
 
 			if (data.find(date) != data.end())
 				throw (std::invalid_argument("Duplicate date: " + dateStr));
-			data[date * -1] = exchangeRate;
+			data[date] = exchangeRate;
 		} catch (std::exception &e) {
 			std::cerr << "Data error: " << e.what() << std::endl;
 		}
